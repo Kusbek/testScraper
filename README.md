@@ -9,8 +9,8 @@ If you want obey rules of robot.txt change
 p.s zakon.kz would not work if you obey the rules
 
 to run the scrapper write following command in project directory
-
->$scrapy crawl zakon
+>$ docker run -p 8050:8050 scrapinghub/splash
+>$ scrapy crawl zakon
 
 output file is pipelined into "zakon.csv"
 
