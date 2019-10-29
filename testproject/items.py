@@ -14,5 +14,5 @@ class TestprojectItem(scrapy.Item):
     date = scrapy.Field()
     comment_count = scrapy.Field()
     title = scrapy.Field()
-
+    comments = scrapy.Field()
     pass

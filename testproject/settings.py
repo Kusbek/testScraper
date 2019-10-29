@@ -26,7 +26,7 @@ ROBOTSTXT_OBEY = False
 
 SPLASH_URL = 'http://localhost:8050'
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 4
+CONCURRENT_REQUESTS = 16
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 
 # Configure a delay for requests for the same website (default: 0)

@@ -17,12 +17,12 @@ class TestprojectPipeline(object):
         self.file.close()        
 
     def process_item(self, item, spider):
-        # create_valid_csv(item)
-        self.exporter.export_item(item)
-        
-        # def create_valid_csv(self, item):
-        #     for key, value in item.items():
-        #         is_string = (isinstance(value, basestring))
-        #         if (is_string and ("," in value.encode('utf-8'))):
-        #             item[key] = "\"" + value + "\""        
+        # new_item = self.create_valid_csv(item)
+        self.exporter.export_item(item)   
         return item
+    # def create_valid_csv(self, item):
+    #     for key, value in item.items():
+    #         is_string = (isinstance(value, str))
+    #         if (is_string and ("," in value.encode('utf-8'))):
+    #             item[key] = "\"" + value + "\""
+    #     return item            
