@@ -8,7 +8,7 @@ NEWSPIDER_MODULE = 'testproject.spiders'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
-
+RETRY_TIMES=3
 # PROXY_POOL_ENABLED = True
 # PROXY_POOL_PAGE_RETRY_TIMES = 10
 
@@ -24,6 +24,8 @@ DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 ITEM_PIPELINES = {
     'testproject.pipelines.TestprojectPipeline': 500,
 }
+
+
 DOWNLOADER_MIDDLEWARES = {
 #     'scrapy_proxy_pool.middlewares.ProxyPoolMiddleware': 610,
 #     'scrapy_proxy_pool.middlewares.BanDetectionMiddleware': 620,
