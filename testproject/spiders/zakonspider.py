@@ -1,12 +1,16 @@
 import scrapy
 from scrapy.http import Request
+from scrapy_splash import SplashRequest
 from ..items import TestprojectItem
+import csv
 
 class ZakonSpider(scrapy.Spider):
     name = "zakon"
+
     start_urls = [
-        'http://zakon.kz/news'
+        'https://zakon.kz/news'
     ]
+
 
     def parse(self, response):
         news_block = response.css("div#dle-content")
@@ -15,19 +19,26 @@ class ZakonSpider(scrapy.Spider):
             href = news.css('a.tahoma::attr(href)').extract_first()
             if(href != None):
                 url = 'https://www.zakon.kz'+href
-                yield Request(url, callback=self.parseDetailedPage, dont_filter=True)
+                yield SplashRequest(url, callback=self.parseDetailedPage, errback=self.errback, dont_filter=True, args={'timeout': 60})
     
     def parseDetailedPage(self, response):
+        comment_count = response.css("span.zknc-total-count::text").extract_first()
         items = TestprojectItem()
         title = response.css("h1::text").extract()
         story = response.css("div#initial_news_story p::text").extract()
         date = response.css("span.news_date")
         day = date.css("::text").extract_first()
         time = date.css("span span::text").extract_first()
-        comment_count = response.css("span.zknc-total-count::text").extract_first()
+        
+        if(comment_count == None):
+            comment_count = '0'
         items['title'] = title
         items['story'] = story
-        items['date'] = day+time
+        if(day != None and time != None):
+            items['date'] = day+time
         items['comment_count'] = comment_count
         filename = 'zakon.csv'
         yield items
+    def errback(self, failure):
+        self.logger.info('Handled by the errback: %s (%s exception)', failure.request.url, str(failure.value))
+        return {'url': failure.request.url}
